@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script> 
+    <script
+      src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
+
+      <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.1/backbone.min.js"></script>
+</head>
+<body>
+    <div>open console for more details</div>
+    <script>
+        // $(document).ready(function(){
+            var myModels = Backbone.Model.extend({
+                defaults:{
+                name:'mouli',
+                empId:5554,
+                place:'bengaluru'
+                },
+                initialize:function(){
+                    this.render();
+                    // console.log("hello inheritance");
+                },
+                render:function(){
+                    console.log("hello inheritance");
+                },
+                parentFunc:function(){
+                    console.log('parent function');
+                },
+            });
+        
+
+            var data1 = new myModels(
+                {
+                name:'m1',
+                empId:5555,
+                place:'bengaluru'
+            }
+            );
+            var data2 = new myModels(
+                {
+                name:'m2',
+                empId:5556,
+                place:'bengaluru'
+            }
+            );
+            var data3 = new myModels(
+                {
+                name:'m3',
+                empId:5557,
+                place:'bengaluru'
+            }
+            );
+
+            var myCollect = Backbone.Collection.extend({
+                Model:myModels,
+            })
+
+            var collectionObj = new myCollect();
+//collection.add()
+//this appends to last of the index
+            // collectionObj.add(data1);
+            // collectionObj.add(data2);
+            // collectionObj.add(data3);
+//or
+            collectionObj.add([data1,data2]);
+//specifying postion of add
+            collectionObj.add(data3,{at:1});
+
+//collection.unshift()
+//this appends the second data in first index
+            // collectionObj.unshift(data1);
+            // collectionObj.unshift(data2);
+            
+//this gives the same data
+            // collectionObj.unshift([data1,data2]);
+
+//collection.push()
+//same as add()
+            // collectionObj.push(data1);
+
+//collection.remove()
+
+            // collectionObj.remove(data1);
+
+//collection.pop()
+            // collectionObj.pop();
+            
+//collection.shift()
+             collectionObj.shift();
+
+            var mdlView = Backbone.View.extend({
+                collection:collectionObj,
+                initialize:function(){
+                    this.render()
+                },
+                render:function(){
+                    _.each(this.collection.toJSON(),function(model){
+                        console.log(model);
+                    });
+                    console.log(this.collection.toJSON()); 
+                    console.log('collections model');
+                }
+            })
+
+            var myModel = new mdlView();
+           
+
+        // })
+    </script>
+    
+</body>
+</html>

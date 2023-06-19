@@ -1,0 +1,39 @@
+{
+    "data":[
+        {
+      "name":"gfdkuajfph",
+      "from":"12:00",
+      "to":"15:00",
+      "nextFrom":"18:00",
+      "nextTo":"21:00"
+    },
+        {
+      "name":"name2",
+      "from":"07:00",
+      "to":"13:00",
+      "nextFrom":"18:00",
+      "nextTo":"21:00" 
+    },
+        {
+      "name":"name 3",
+      "from":"06:00",
+      "to":"15:00",
+      "nextFrom":"18:00",
+      "nextTo":"21:00" 
+    },
+        {
+      "name":"name 4",
+      "from":"12:00",
+      "to":"18:00",
+      "nextFrom":"18:00",
+      "nextTo":"21:00"  
+    },
+        {
+      "name":"name 5",
+      "from":"20:00",
+      "to":"23:00",
+      "nextFrom":"",
+      "nextTo":""  
+    }
+]
+}

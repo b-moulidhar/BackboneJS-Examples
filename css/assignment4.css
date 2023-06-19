@@ -1,0 +1,55 @@
+th {
+     /* add padding */
+    text-align: center;
+    border: 1px solid grey;
+
+  }
+  #editTable{
+    text-align: center;
+    margin: 50px auto;
+    width: 85%;
+    border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 15px;
+    
+  }
+  #mainTable{
+    text-align: center;
+    width: 50%;
+    border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 15px;
+  }
+  td{
+    align-items: center;
+  }
+  input[type="time"]{
+    margin: 0px 20px 0px 20px ;
+    width: 40%;
+  }
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
+  #container{
+    margin: 50px;
+    padding: 30px;
+    background-color: #a2d2ff;
+  }
+  #saveBtn{
+    float:right;
+  }
+  table tbody:first-child {
+    padding: 5px;
+  }
+  
+  /* input[type="time"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  } */
+  
+  /* input[type="time"]::-webkit-clear-button {
+    -webkit-appearance: none;
+    margin: 0;
+  } */
+  

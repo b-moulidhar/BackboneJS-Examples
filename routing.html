@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script> 
+    <script
+    src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
+
+    <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.1/backbone.min.js"></script>
+    <title>Model Events</title>
+</head>
+<body>
+    <h1>Model events and attributes with validation</h1>
+    <div id="content">
+
+        <script type="text/template" id="eves">
+            <a href="#/view1">hello</a>
+            <a href="#/view2">hello2</a>
+            <button id="btnclick">click me</button>
+            <button id="btnclick1">click me 1</button>
+        </script>
+        <script type="text/template" id="eves1">
+            <a href="#/view1">hello</a>
+            <a href="#/view2">hello2</a>
+            <a href="#">home</a>
+            <button id="btnclick">click me 2</button>
+            <button id="btnclick1">click me 3</button>
+        </script>
+        <script type="text/template" id="eves2"> 
+            <a href="#/view1">hello</a>
+            <a href="#/view2">hello2</a>
+            <a href="#">home</a>
+            <button id="btnclick">click me 4</button>
+            <button id="btnclick1">click me 5</button>
+        </script>
+    </div>
+    <script>
+        var exModel = Backbone.Model.extend({
+            defaults:{
+                name:'',
+                // empId:5555,
+               
+            },
+            initialize:function(){
+                this.render();
+            },
+           
+            render:function(){
+                console.log("Model events and attributes");
+               
+            },
+            validate: function(attributes) {
+                if (attributes.age < 1) {
+                    return 'Age must be greater than 0';
+                }
+                if (!attributes.name) {
+                    return 'name is not found';
+                }
+            }
+
+        });
+        var exmdl = new exModel();
+       
+        exmdl.set({
+            // name:'Moulidhar',
+            address:'<div>bengaluru</div>',
+            yesmsg:'yep!!',
+            nomsg:"No, actually i'm from Kolar",
+            // id:4,
+            age:2
+          
+        });
+
+        var exView = Backbone.View.extend({
+            el:'#content',
+            model: exmdl,
+            template:_.template($('#eves').html()),
+            initialize: function() {
+             
+                this.render();
+            },
+            render: function() {
+                // console.log(this.model.escape('address'));
+                // console.log(this.model.get('address'));
+                // console.log(this.model.has('address'));  //returns boolean value
+                // console.log(this.model.unset('address')); //removes particular key-value pair
+                // console.log(this.model.clear());          // removes all key-value pairs
+                this.$el.html(this.template())
+               
+            },
+           
+        });
+        var exView2 = Backbone.View.extend({
+            el:'#content',
+            model: exmdl,
+            template:_.template($('#eves1').html()),
+            initialize: function() {
+                this.render();
+            },
+            render:function(){
+                this.$el.html(this.template())
+            }
+        });
+        var exView3 = Backbone.View.extend({
+            el:'#content',
+            model: exmdl,
+            template:_.template($('#eves2').html()),
+            initialize: function() {
+                this.render();
+            },
+            render:function(){
+                this.$el.html(this.template())
+            }
+        });
+
+        var routes = Backbone.Router.extend({
+            routes:{
+                 '':'showview1',
+                 'view1':'showview2',
+                 'view2':'showview3',
+            },
+            showview1:function(){
+                var exvew = new exView();
+                console.log("hello view 1")
+            },
+            showview2:function(){
+                var exvew2 = new exView2();
+                console.log("hello view 2")
+            },
+            showview3:function(){
+                var exvew2 = new exView2();
+                console.log("hello view 3")
+            },
+
+        });
+
+        var routers = new routes();
+        Backbone.history.start();
+        // var exvew = new exView();
+        // var exvew2 = new exView2();
+    </script>
+</body>
+</html>

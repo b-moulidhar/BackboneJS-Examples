@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" 
+     crossorigin="anonymous"></script> 
+     <script
+       src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+
+       <script type="text/javascript"
+       src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+
+      
+    <title>Document</title>
+</head>
+<body>
+    <nav>
+        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum doloremque esse fugit ad modi accusamus enim, totam voluptas
+             dolores minima nobis suscipit omnis blanditiis earum rem? Dolore impedit accusantium praesentium.
+        </div>
+    </nav>
+    <h1 id="para">hello</h1>
+    <h1 id="para1">hello1</h1>
+    <h1 id="para2">hello2</h1>
+    <h1 id="para3">hello3</h1>
+    <h1 id="para4">hello4</h1>
+    <input id="pwd" type="password">
+    <button onclick="showPswdView()">hide/show</button>
+    <script>
+        $(document).ready(function(){
+
+      
+        $('#para').click(function(){
+            $(this).hide();
+        })
+        $('div').hover(function(){
+            $(this).hide();
+        })
+        var trigger = false;
+        $(document).keypress(function(e){
+            // alert(e.key)
+            if(e.key =='Enter'){
+                if(trigger===false){
+                    
+                    $('nav').fadeIn(500);
+                    trigger=true;
+                }
+                else if(trigger===true){
+                    $('nav').fadeOut(500);
+                    trigger=false;
+                }
+            }
+        })
+        
+    })
+    </script>
+    <script>
+        var loginpwd = false;
+        function showPswdView(){
+            let getpswdView = $('#pwd');
+            if(loginpwd===false){
+                getpswdView.attr('type','text');
+                loginpwd = true;
+            }
+            else if(loginpwd===true){
+                getpswdView.attr('type','password');
+                loginpwd=false;
+            }
+        }
+    </script>
+</body>
+</html>

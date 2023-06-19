@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/assignment.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script> 
+    <script
+      src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
+
+      <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.1/backbone.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <title>Assignment</title>
+</head>
+<body>
+    <div class="container"></div>
+    <script type="text/template" id="myView">
+
+        <% if(this.collection.toJSON()!=''){ %>  
+       
+        <form id='updateForm'>
+            <div class="mb-3">
+              <label for="nameUp" class="form-label">Name</label>
+              <input type="text" class="form-control" id="nameUp" value='<%= name %>' aria-describedby="emailHelp" required>
+            </div>
+            <div class="mb-3">
+              <label for="addressUp" class="form-label">Address</label>
+              <input type="text" class="form-control" id="addressUp" value='<%= address %>' required>
+            </div>
+            <div class="mb-3">
+                <label for="empIdUp" class="form-label">Employee ID</label>
+                <input type="number" disabled class="form-control" id="empIdUp" value='<%= empId %>' aria-describedby="emailHelp" required>
+            </div>
+            <div class="mb-3">
+              <label for="ageUp" class="form-label">Age</label>
+              <input type="number" class="form-control" id="ageUp" value='<%= age %>' required>
+            </div>
+            <div class="mb-3">
+              <label for="placeUp" class="form-label">Birth Place</label>
+              <input type="text" class="form-control" id="placeUp" value='<%= place %>' required>
+            </div>
+            <br>
+            
+            <button type="submit" id='updateDetails' class="btn btn-primary">Update Details</button>
+          </form>
+         
+          <% } %>
+        <!-- <form > -->
+            <div id='createDetails'>
+                <div  class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your Name" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="address" placeholder="Enter your Address" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="empId" class="form-label">Employee Id</label>
+                    <input type="number" class="form-control" id="empId" placeholder="Enter your Employee Id" required>
+                    <div id="emailHelp" class="danger" style='color:#9b2226'>!!!Please enter correct Employee id</div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="age" class="form-label">Age</label>
+                    <input type="number" class="form-control" id="age" placeholder="Enter your Age" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="place" class="form-label"> Birth Place</label>
+                    <input type="text" class="form-control" id="place" placeholder="Enter your Birth place" required>
+                  </div>
+                  <br>
+                  <button type='submit' id='setDetails'>Set details</button>
+                  <br> <br>
+                  <button  id='viewDetails'>View details</button>
+            </div>
+        <!-- </form> -->
+
+              <br>
+              <div id='details'>
+                <br>
+                <button class='close'>X</button>
+                <table class="table tcontainer table-responsive">
+                    <thead>                    
+                    <tr>                    
+                     <th scope="col">Name</th>                    
+                     <th scope="col">Email</th>                    
+                     <th scope="col">Employee Id</th>                    
+                     <th scope="col">Company</th>                    
+                     <th scope="col">Place</th>                   
+                     <th scope="col">Update</th>                    
+                     <th scope="col">Delete</th>                    
+                    </tr>                    
+                    </thead>                    
+                    <tbody>                    
+                   <% _.each(collection,function(user){ %>                    
+                    <tr>                    
+                     <td><%= user.name %></td>                    
+                     <td><%= user.address %></td>                    
+                     <td><%= user.empId %></td>                   
+                     <td><%= user.age %></td>                   
+                     <td><%= user.place %></td> 
+                     <td><button class='update'>update</button></td>                  
+                     <td><button class='delete'>delete</button></td>                  
+                    </tr>                    
+                    <% }) %>                   
+                    </tbody>
+                    
+                 </table>
+              </div>
+    </script>
+    
+    <script>
+        $(document).ready(function(){
+            
+            var MyModel = Backbone.Model.extend({
+                validate:function(attribute){
+                    
+                    if(!attribute.name){
+                        return 'Please Enter your Name!';
+                    }
+                    else if(!attribute.address){
+                        return 'Please Enter your Address!';
+                    }
+                    else if(attribute.empId<1){
+                        return 'Please Enter your Employee ID!';
+                    }
+                    else if(attribute.age<1){
+                        return 'Please Enter your Age!';
+                    }
+                    else if(attribute.age<10 || !attribute.age){ 
+                        return 'please enter proper age'
+                    }
+                    
+                }
+            });
+
+            var modelMy = new MyModel();
+            // modelMy.set({
+            //         name: '',
+            //         address:'',
+            //         empId:0,
+            //         age:0,
+            //         place:''
+            //     })
+
+                var collections = Backbone.Collection.extend({
+                    model:MyModel,
+                
+                });
+
+                var myCollections = new collections();
+                // myCollections.add(modelMy);
+           
+            var MyView = Backbone.View.extend({
+                el: '.container',
+                collection: myCollections,
+                template:_.template($('#myView').html()),
+                initialize: function () {
+                    this.render();
+                   
+                        $('#details').hide();
+                        $('#updateForm').hide();
+                    
+                },
+                events: {
+                    'change #name': 'updateName',
+                    'change #address': 'updateAddress',
+                    'change #empId': 'updateEmp',
+                    'change #age': 'updateAge',
+                    'change #place': 'updatePlace',
+                    'click .delete':'deleteUser',
+                    'click .update':'updateModel',
+                    'click #updateDetails':'updateDetails',
+                    'click #setDetails':'setVal',
+                    'click .close':'closePop',
+                    'click #viewDetails':'viewDetails'
+                },
+                render: function () {
+                    $('#details').hide();
+                        $('#updateForm').hide();
+                    this.$el.html(this.template({collection:this.collection.toJSON()}));
+                },
+               
+                 deleteUser: function (event) {
+                    event.preventDefault();
+                     var index = $(event.currentTarget).closest('tr').index();
+                    
+                     Swal.fire({
+                         title: 'Are you sure?',
+                         text: "You won't be able to revert this!",
+                         icon: 'warning',
+                         showCancelButton: true,
+                         confirmButtonColor: '#3085d6',
+                         cancelButtonColor: '#d33',
+                         confirmButtonText: 'Yes, delete it!'
+                     }).then((result) => {
+                         if (result.isConfirmed) {
+                             Swal.fire(
+                                 'Deleted!',
+                                 'Your file has been deleted.',
+                                 'success'
+                             )
+                          
+                                this.collection.at(index).destroy()
+                                this.render()
+                                $('#updateForm').hide();
+                         }
+                     })
+                     $('#updateForm').hide();
+                },
+                
+                updateModel: function () {
+                    // $('#createDetails').hide()
+                    $('#updateForm').show()
+                    let col;
+                    col = {name:'',address:'',empId:0,age:0,place:''}
+                    var index = $(event.currentTarget).closest('tr').index();
+                     col = this.collection.at(index);
+                     console.log(col.toJSON());
+                     var templateData = _.extend({}, col.toJSON(), { collection:this.collection.toJSON(),name: col.toJSON().name,address:col.toJSON().address,  empId:col.toJSON().empId,age:col.toJSON().age, place:col.toJSON().place  });
+                    this.$el.html(this.template(templateData));
+                    $('#createDetails').hide()
+                },
+
+                updateDetails:function(e){
+                    e.preventDefault();
+                    let name=$('#nameUp').val();
+                    let address=$('#addressUp').val();
+                    let empId=$('#empIdUp').val();
+                    let age=$('#ageUp').val();
+                    let place=$('#placeUp').val();
+                    console.log(name, address, empId, age, place);
+                    var modelToUpdate = this.collection.findWhere({ empId: empId });
+                    console.log(modelToUpdate);
+                    if (modelToUpdate) {
+                        modelToUpdate.set({ name:name,
+                        address:address,
+                        empId:empId,
+                        age:age,
+                        place:place,});
+                    }
+                    this.render();
+                    $('#updateForm').hide()
+                    $('#createDetails').show()
+                },
+
+
+                setVal:function(e){
+                    e.preventDefault();
+                    let data = {
+                        name:$('#name').val(),
+                        address:$('#address').val(),
+                        empId:$('#empId').val(),
+                        age:$('#age').val(),
+                        place:$('#place').val(),
+                    }
+                    let mdl = new MyModel(data);
+
+                    if(mdl.isValid()){
+                        console.log('valid data')
+                        this.collection.add(mdl);
+                              Swal.fire(
+                            'Good job!',
+                            'You entered details successfully!!',
+                            'success'
+                        )
+                    }else{
+                        Swal.fire(
+                            'Please Enter all Fields',
+                            mdl.validationError,
+                            'warning'
+                        )                       
+                    }
+                    // if(!data.name&& !data.address && data.age!='' && data.empId!=''){
+                        // modelMy.append(data);
+                    // }
+                    
+                    
+                    // var templateData = _.extend({}, this.model.toJSON(), { name: this.model.get('name'),address:this.model.get('address'),  empId:this.model.get('empId'),age:this.model.get('age') });
+                    this.$el.html(this.template({collection:this.collection.toJSON()})); 
+                    $('#details').hide();
+                    $('#updateForm').hide()
+                    
+
+                },
+                closePop:function(){
+                    
+                        $('#details').hide(500);
+                    
+                },
+                viewDetails:function(){
+                    let data = this.model.toJSON();
+                    console.log(this.collection.toJSON());
+                    if(this.collection.toJSON()==''){
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Please enter proper details!'
+                        })
+                    }
+                    else{
+                        $('#details').show(500);
+                       
+                    }
+                }
+            });
+
+            // var myModel = new MyModel();
+            var myView = new MyView({ 
+                model:modelMy   
+        });
+
+
+        })
+    </script>
+     <!-- updateModel: function () {
+        // $('#createDetails').hide()
+        $('#updateForm').show()
+        var index = $(event.currentTarget).closest('tr').index();
+         let col = this.collection.at(index);
+         console.log(col.toJSON())
+         var templateData = _.extend({}, col.toJSON(), { collection:this.collection.toJSON(),name: col.toJSON().name,address:col.toJSON().address,  empId:col.toJSON().empId,age:col.toJSON().age, place:col.toJSON().place });
+        this.$el.html(this.template(templateData));
+        $('#createDetails').hide()
+    },
+
+    updateDetails:function(e){
+        e.preventDefault();
+        let name=$('#nameUp').val();
+        let address=$('#addressUp').val();
+        let empId=$('#empIdUp').val();
+        let age=$('#ageUp').val();
+        let place=$('#placeUp').val();
+        console.log(name, address, empId, age, place);
+        var modelToUpdate = this.collection.findWhere({ empId: empId });
+        console.log(modelToUpdate);
+        if (modelToUpdate) {
+            modelToUpdate.set({ name:name,
+            address:address,
+            empId:empId,
+            age:age,
+            place:place,});
+        }
+        this.render();
+        $('#updateForm').hide()
+        $('#createDetails').show()
+    }, -->
+
+    <!-- setVal:function(e){
+        e.preventDefault();
+        // this.collection.validate();
+        // console.log(this.model.toJSON());
+        // $('#nameInp').append(this.model.get('name'));
+        // $('#Addr').append(this.model.get('address'));
+        // $('#Emp').append(this.model.get('empId'));
+        // $('#Age').append(this.model.get('age'));
+       
+        let data = {
+            name:$('#name').val(),
+            address:$('#address').val(),
+            empId:$('#empId').val(),
+            age:$('#age').val(),
+            place:$('#place').val(),
+        }
+        let mdl = new MyModel(data);
+
+        if(mdl.isValid()){
+            console.log('valid data')
+            this.collection.add(mdl);
+        }else{
+            Swal.fire(
+                mdl.validationError
+            )
+            
+        }
+        // if(!data.name&& !data.address && data.age!='' && data.empId!=''){
+            // modelMy.append(data);
+        // }
+        
+        
+        // var templateData = _.extend({}, this.model.toJSON(), { name: this.model.get('name'),address:this.model.get('address'),  empId:this.model.get('empId'),age:this.model.get('age') });
+        this.$el.html(this.template({collection:this.collection.toJSON()})); 
+        $('#details').hide();
+        $('#updateForm').hide()
+        // let collectionData = this.collection.toJSON()
+        // if(collectionData){
+        //     console.log('in if condition')
+        //     // _.each(collectionData,function(model){
+        //     //     console.log('in each loop condition',model.name);
+        //     //     if(!model.name){
+        //     //         Swal.fire(
+        //     //         'please enter your name'
+        //     //      )
+        //     //     }
+        //     //     else if(model.age<10 || !model.age){
+        //     //         Swal.fire(
+        //     //         'please enter your age'
+        //     //      )
+        //     //     }
+        //     //     else if(!model.address){
+        //     //         Swal.fire(
+        //     //         'please enter your address'
+        //     //      )
+        //     //     }
+        //     //     else if(model.age<1){
+        //     //         Swal.fire(
+        //     //         'please enter your age'
+        //     //      )
+        //     //     }
+        //     //     else if(model.empId<1){
+        //     //         Swal.fire(
+        //     //         'please enter your EmpId'
+        //     //      )
+        //     //     }
+        //     //     else{
+        //     //         this.collection.add(data);
+        //     //     }
+
+        //     // //     switch (model) {
+        //     // //         case model.name=='':{
+        //     // //             console.log('in switch one');
+        //     // //             Swal.fire(
+        //     // //         'please enter your name'
+        //     // //      )
+        //     // //         }
+                        
+        //     // //             break;
+                
+        //     // //         default:Swal.fire(
+        //     // //     'Good job!',
+        //     // //     'You entered details successfully!!',
+        //     // //     'success'
+        //     // // )
+        //     // //             break;
+        //     // //     }
+        //     // })
+        //     // this.collection.add(data);
+        //     // Swal.fire(
+        //     //     'Good job!',
+        //     //     'You entered details successfully!!',
+        //     //     'success'
+        //     // )
+        // $('#details').hide();
+        // }else{
+        //     Swal.fire(
+        //         'please enter all the details'
+        //     )
+        // }
+
+    }, -->
+
+    <!-- //     validate:function(models){
+        //         console.log(models)
+        //     // if(attribute.age<10 || !attribute.age){ 
+        //     //     return 'please enter proper age'
+        //     // }
+        //     _.each(models,function(model){
+
+        //         if(!model.get('name')){
+        //             console.log(model)
+        //         }
+        //         else if(!model.get('address')){
+        //             return false;
+        //         }
+        //         else if(model.get('empId')<1){
+        //             return false;
+        //         }
+        //         else if(model.get('name')<1){
+        //             return false;
+        //         }
+        //        return true
+        //     })
+            
+        // } -->
+</body>
+</html>

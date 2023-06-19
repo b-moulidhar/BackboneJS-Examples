@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet/less" href="./less/lessVariables.less">
+    <script src="https://cdn.jsdelivr.net/npm/less" ></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script> 
+    <script
+      src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
+
+      <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.1/backbone.min.js"></script>
+    <title>Less</title>
+</head>
+<body> 
+	<div id="container"></div>
+
+        <script type="text/template" id="mainPage">
+           
+        <h2>Goods Receiving Hours</h2>
+        <br>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aut inventore aliquid quisquam sint, odit deleniti 
+            unde quia consequatur odio soluta dolores corporis sit, quam fugiat iure culpa cupiditate nesciunt non? 
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident asperiores nisi aut. Quod quibusdam a asperiores 
+            necessitatibus repudiandae reprehenderit nobis aperiam magnam beatae odio! Ab, fuga. Corporis amet voluptas similique.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt modi ex consectetur ipsa quibusdam fugiat repellendus
+            earum vel fuga magnam. Ex aperiam amet mollitia fugit pariatur quam totam voluptatum sequi.
+        </p>
+        <br>
+        <h3>Sold-to</h3>
+        <select class="form-control" name="" id="soldTo" >
+                <option value="lorem1">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed necessitatibus, optio ex est odio!</option>
+                <option value="lorem2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed necessitatibus, optio ex est odio!</option>
+                <option value="lorem3">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed necessitatibus, optio ex est odio!</option>
+            </select>
+            <h3>Ship-to</h3>
+            <select class="form-control" name="" id="soldTo" >
+                <option value="lorem1">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed necessitatibus, optio ex est odio!</option>
+                <option value="lorem2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed necessitatibus, optio ex est odio!</option>
+                <option value="lorem3">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed necessitatibus, optio ex est odio!</option>
+            </select>
+            <br>
+            <h4>goods receiving hours for the gas products at the given location</h4>
+            
+            <div class='tblBtnMain row'>
+            <div class='tblClass col-10'>
+                <table class="table table borderless" id='mainTable'>
+
+                  <% _.each(collection,function(user){ %>
+                    <% if(user.name){ %>
+                    <tbody>
+                        <td><%= user.name %> </td>
+                        <td>
+                            <span><%= user.from %></span>-<span><%= user.to %></span>
+                        </td>
+                        <td>
+                          <span><%= user.nextFrom %></span>-<span><%= user.nextTo %></span>
+                        </td>
+                    </tbody>
+                    <%  } %>
+               <% }) %>
+               
+                </table>
+        <button id='btnEdit' class='btn btn-primary'>edit goods receiving hours</button>
+        </div>
+        <div class="mainBtn col-10">           
+        <button class='btn btn-primary' id='newShipTo'>add new ship to</button>
+        </div>
+
+        </script>
+            
+  </div>
+      <div id='editContent'>
+				
+
+				</div>
+
+        <script type="text/template" id="editPage">
+          <a class='close' id='closeEdit'>X</a>
+          <br>
+          <h2>Edit Goods recieving hours for Ship To :-</h2>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique sit aspernatur quidem voluptas! 
+              Consectetur dignissimos eius dicta suscipit officia, porro minima cumque, corrupti esse vitae ipsum sapiente? 
+              Harum, dolorum pariatur. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima praesentium odio numquam aspernatur,
+              amet consequatur sapiente aliquid veritatis ipsa nisi maiores ab obcaecati magnam consectetur dolore,
+               ratione reprehenderit deserunt. Magni. Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid dolorum sunt, 
+               tempora earum perspiciatis exercitationem deserunt consequatur distinctio a similique voluptatibus temporibus nihil fugiat voluptatem cum ipsam qui? Maiores, 
+               laudantium. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla quae consectetur atque, 
+               corrupti assumenda eaque earum commodi consequuntur laboriosam sunt dolorem et ipsa accusantium iure tempore numquam excepturi doloribus vel?</p>
+  
+              
+
+              <form>
+                  <input type="radio" name="option" value="option1" checked id='option1'> <label for="option1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt earum non doloribus assumenda voluptate explicabo .</label><br>
+                  <input type="radio" name="option" value="option2" id='option2'><label for="option2"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt earum non doloribus assumenda voluptate explicabo .</label>               
+              </form>
+              <br>
+              <hr>
+           <div class="table-responsive">
+             <table id='editTable' class="table table-borderless">
+                 <tbody>
+                  <thead>
+                    <tr>
+                      <th style='border:none'></th>
+                      <th colspan="2" class="text-center" ><p class="m-2"> morgens</p></th>
+                      <th colspan="2" class="text-center"><p class="m-2">nachmittags</p> </th>
+                    </tr>
+                  </thead>
+                 </tbody>
+
+                 <% _.each(collection,function(user,idx){ %>
+                  <% if(user.name){ %>
+                  <tbody>
+                    <tr>
+                      <td><input type="text" disabled class="name<%=idx%>" value='<%= user.name %>'></td>
+                      <td>
+                          <input type="time" class="form-control from<%=idx%>" value='<%= user.from %>'> 
+                        </td>
+                        <td>
+                          <input type="time" class="form-control to<%=idx%>" value='<%= user.to %>'>
+                        </td>
+                      <td>
+                          <input type="time" class="form-control nextFrom<%=idx%>" value='<%= user.nextFrom %>'> 
+                        </td>
+                        <td>
+                          <input type="time" class="form-control nextTo<%=idx%>" value='<%= user.nextTo %>'> 
+                        </td>
+                    </tr>
+                   </tbody>
+                <%  } %>
+             <% }) %>
+                
+                 
+             </table>
+           </div>
+                  <p>549324 ....... Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis sint blanditiis similique iusto quis id numquam molestiae, 
+                      accusamus dicta, rem vitae ab totam consequatur quos, quod laboriosam ipsum asperiores explicabo.</p><br>
+                      <button id='saveBtn' class='btn btn-primary'>Save</button>
+        </script>
+              
+        <script>
+          $(document).ready(function(){
+          
+              var data;
+              var MyModel = Backbone.Model.extend({
+                  url: '../data/assign4.json', // URL or file path of the JSON data
+          
+              });
+              var collections = Backbone.Collection.extend({
+                    model:MyModel,                
+                });
+              var modelobj = new MyModel();
+              var myCollections = new collections();
+                var View1 = Backbone.View.extend({ 
+                    el:"#container",
+                    model:MyModel,
+                    events:{
+                            "click #btnEdit":'editHours',
+                            // "click #closeEdit":'closeEditDetails'
+                          },
+                    template:_.template($('#mainPage').html()),
+                    initialize:function(){
+                      $('#editContent').hide();
+                        var self = this;
+                        this.model = new MyModel();
+                        // var modelobj = new MyModel();
+                        this.model.fetch({
+                            success: function (model, response) {
+                                // JSON data has been successfully fetched
+                                data = response.data
+                                model.set(data)
+                                modelobj.set(response.data);
+                                _.each(data,function(user){
+                                  myCollections.add(user);
+                                })
+                                // console.log(myCollections)
+                                self.render();
+                            },
+                            error: function (model, response) {
+                                // Error occurred while fetching JSON data
+                                console.error('Error fetching JSON data:', response);
+                            }
+                        });
+                        if(this.model.toJSON()!={}){
+                            // console.log(this.model.toJSON())
+                            this.render();
+                          }else{
+                            alert("data not found");
+                          }
+                    },
+                    render:function(){
+                      // console.log(modelobj.toJSON());
+                        this.$el.html(this.template({collection:myCollections.toJSON()}));
+                        // console.log(this.model.toJSON())
+            
+                    },
+                    editHours:function(){
+                      var viewOne = new view2()
+                          // console.log(this.model.toJSON())
+                         
+                          },
+                    
+                });
+
+          
+                      var view2 = Backbone.View.extend({
+                          el:"#editContent",
+                          model:MyModel,
+                          events:{
+                          "click #closeEdit":'closeEditDetails',
+                          "click #saveBtn":'saveEditDetails'
+
+                        },
+                          template1:_.template($('#editPage').html()),
+                          initialize:function(){
+                            
+                        
+                        if(modelobj.toJSON()!={}){
+                            // console.log(this.model.toJSON())
+                            this.render();
+                          }
+                    },
+                          render:function(){
+                            $('#editContent').show();
+                            this.$el.html(this.template1({collection:myCollections.toJSON()}))
+
+                          },
+                          closeEditDetails:function(){
+                            console.log('close');
+                            $('#editContent').hide(500);
+                          },
+                          saveEditDetails:function(e){
+                            console.log('save');
+                            e.preventDefault();
+                           let name;
+                           let from;
+                           let to;
+                           let nextFrom;
+                           let nextTo;
+                           myCollections.forEach((models,idx) => {
+                             name=$(`.name${idx}`).val()
+                             from=$(`.from${idx}`).val();
+                             to=$(`.to${idx}`).val();
+                             nextFrom=$(`.nextFrom${idx}`).val();
+                             nextTo=$(`.nextTo${idx}`).val();
+                             console.log(from, to, nextFrom, nextTo);
+                             console.log(models.attributes.name == name)
+                              var modelToUpdate = models.collection.findWhere({ name: name });
+                              // console.log(modelToUpdate);
+                              if (modelToUpdate) {
+                                  modelToUpdate.set({ from:from,
+                                  to:to,
+                                  nextFrom:nextFrom,
+                                  nextTo:nextTo,
+                                });
+                              }
+                              myCollections.add(modelToUpdate)
+                            });
+                            console.log(myCollections);
+                            this.render();
+                       }
+                      })
+
+                      var viewOne = new View1()
+          
+                  })
+                  </script>
+    
+</body>
+</html>

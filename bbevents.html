@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script> 
+    <script
+      src="./js/underscore.js"></script>
+
+      <script type="text/javascript"
+      src="./js/backbone.js"></script>
+    <title>Events</title>
+</head>
+<body>
+    <h1>hello</h1>
+    <div id="content">
+
+        <script type="text/template" id="eves">
+            <button id="btnclick">click me</button>
+            <button id="btnclick1">click me 1</button>
+        </script>
+    </div>
+    <script>
+        $(document).ready(function(){
+            var eventView = Backbone.View.extend({
+                template:_.template($('#eves').html()),
+                events:{
+                    "click #btnclick":"onClick",
+
+                },
+                onClick:function(){
+                    alert("hello")
+                },
+                initialize:function(){
+                    this.render()
+                },
+                render:function(){
+                    this.$el.html(this.template())
+                    console.log("hello events");
+                    $('#btnclick1').on('click',function(){
+                        alert("clicked on click me")
+                    })
+                }
+            })
+             var eve = new eventView({
+                el:'#content'
+             });
+        })
+    </script>
+</body>
+</html>

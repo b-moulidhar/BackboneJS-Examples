@@ -1,0 +1,171 @@
+/* 
+ * LESS Variables are defined with an @ character
+ * and can have different kinds of data types: 
+ *  color, string, boolean, multi-value
+ */
+
+ @c12 : grey;
+
+ #container{
+         margin: 30px;
+         padding: 30px;
+         //    background-color: #a2d2ff;
+         th {
+            /* add padding */
+         text-align: center;
+         border: 1px solid grey;
+
+         }
+         p{
+            text-align: justify;
+         }
+         #editTable{
+         text-align: center;
+         margin: 20px;
+         width: 85%;
+         //    border-collapse: separate;
+         text-indent: initial;
+         border-spacing: 15px;
+         }
+
+
+         .tblClass{
+            background-color: lightblue;
+            width: 100%;
+            padding: 30px;
+            flex:1;
+         
+            #btnEdit{
+               float: right;
+            }
+            #mainTable{
+               // text-align: center;
+               // border-collapse: separate;
+               // text-indent: initial;
+               // border-spacing:55px 10px;
+              td{
+               border: none;
+              }
+              tbody{
+               border: none;
+              }
+
+            }
+
+         
+         }
+        
+         td{
+         align-items: center;
+         }
+         input[type="time"]{
+            text-align: center;
+         margin: 0px 20px 0px 20px ;
+         width: 30%;
+         }
+         input[type="time"]::-webkit-calendar-picker-indicator {
+         display: none;
+         }
+
+        
+         table tbody:first-child {
+         padding: 5px;
+         }
+         //  #editContent{
+         //     background-color: @c13;
+         //  }
+         .tblBtnMain{
+            // position: relative;
+            display: flex;
+         }
+         .mainBtn{
+            display: flex;
+            justify-content: end;
+            margin-top: auto;
+            width: 100%;
+            padding: 30px;
+            flex: 1;
+         
+            #newShipTo{
+               // position: absolute;
+               // bottom: 20px;
+               // right: 10px;
+               float: right;
+            }
+         }
+}
+
+#editContent{
+   margin: 30px;
+   padding: 30px;
+   background-color: rgb(218, 243, 245);
+   p{
+      text-align: justify;
+   }
+   input[type=text] {
+		 background-color: rgb(218, 243, 245); 
+		border: none;
+      width: 70px;
+      margin-top: 7px;
+      // width: 90%;
+	
+	  }
+   input[type="time"]::-webkit-calendar-picker-indicator {
+      display: none;
+      }
+      #saveBtn{
+         float:right;
+         }
+
+         .table-responsive{
+            border:none;
+         }
+         #editTable{
+            text-align: center;
+           
+            width: 100%;
+            text-indent: initial;
+            border-spacing: 15px;
+             
+            td{
+               border:none;
+               width: 20%;
+            }
+            th{
+               border:none;
+               text-align: center;
+            }
+            tbody{
+               border: none;
+               tr{
+                  td{
+                     width: 15%;
+                  }
+               }
+            }
+            thead{
+               tr{
+                  justify-content: space-between;
+                  
+
+                  .m-2{
+                     padding: 5px;
+                     border:0.5px solid;
+                     text-align: center;
+                  }
+               }
+            }
+            
+            }
+}
+
+@media (max-width: 576px) {
+  .tblBtnMain {
+    display: flex;
+    flex-direction: column;
+    .mainBtn{
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script> 
+    <script
+      src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
+
+      <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.1/backbone.min.js"></script>
+    <title>underscore data</title>
+</head>
+<body>
+    <h1>Data Passing through template</h1>
+    <div id="container">
+        <p id="usd"></p>
+        <p id="msg"></p>  
+    </div>
+         <!-- <%  %> is used for calculations -->
+         <!-- <%  %> is used to print on screen -->
+    <script type="text/template" id="temp_id">
+        
+        <% var a = 10; if (a > 5) { %> 
+            <% console.log(a); %>
+            <h2><%= id %></h2>
+          <% } %>
+        <h3>Hello <%= name %>!<br/>aren't you from <%= address%>??</h3>
+        <button id='yes' >yes</button>&nbsp;<button id='no'>No</button>
+    </script>
+    <script>
+        $(document).ready(function(){
+
+            var onlyModel = Backbone.Model.extend({
+                initialize:function(){
+                    console.log("model");
+                }
+            })
+
+            var mdl = new onlyModel();
+            mdl.set({
+                name:'Moulidhar',
+                address:'bengaluru',
+                yesmsg:'yep!!',
+                nomsg:"No, actually i'm from Kolar",
+                id:3
+            })
+            
+            var modlView = Backbone.View.extend({
+                model: mdl,
+                el: '#usd',
+                events:{
+                    'click #yes':'yesFunc',
+                    'click #no':'noFunc'
+                },
+                // template: _.template("<p>Hello <%= name %>!<br/>aren't you from <%= address%></p>"),
+                template:_.template($('#temp_id').html()),
+                initialize: function () {
+                    this.render();
+                },
+                render: function () {
+                    console.log('mdl underscore');
+                    console.log(this.model.toJSON());
+                    this.$el.html(this.template({ name: this.model.get('name'), address: this.model.get('address'), id:this.model.get('id') }));
+                },
+                yesFunc:function(){
+                    alert(this.model.get('yesmsg'));
+                    $('#msg').text(this.model.get('yesmsg'))
+                },
+                noFunc:function(){
+                    alert(this.model.get('nomsg'));
+                    $('#msg').text(this.model.get('nomsg'))
+                },
+            });
+
+
+            var nmodl = new modlView();
+            // nmodl.render();
+            // var modelView = Backbone.View.extend({
+            //     model:mdl,
+            //     el:'#usd',
+            //     // debugger
+            //     template:_.template(`hello ${this.model.toJSON()} this is underscore data passing ${this.model.get('address')}`),
+            //     initialize:function(){
+            //             this.render();
+            //         },
+            //         render:function(){
+            //             console.log("Hello underscore");
+            //             console.log(this.model.toJSON());
+            //             this.$el.html(this.template()); 
+            //         }
+            // })
+            // var nmodel = new modelView();
+           
+        })
+    </script>
+</body>
+</html>

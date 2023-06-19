@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/assignment3.css">
+    <link rel="stylesheet" href="./css/slider.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script> 
+    <script
+      src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
+
+      <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.1/backbone.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <title>Assignment-3</title>
+</head>
+<body>
+    <div id="content">
+        <div id="sideDivBar" z-index="1"></div>
+        <div class="container"></div>
+        <div id="slider-container"></div>
+    </div>
+    <script type="text/template" id="myView">
+        <button class="btn-info" id="openSide" style='float: left;'>|||</button>
+        <br><br>
+        <% if(this.collection.toJSON()!=''){ %> 
+        <form id='updateForm'>
+            <div class="mb-3">
+              <label for="nameUp" class="form-label">Name</label>
+              <input type="text" class="form-control" id="nameUp" value='<%= name %>' aria-describedby="emailHelp" required>
+            </div>
+            <div class="mb-3">
+              <label for="addressUp" class="form-label">Address</label>
+              <input type="text" class="form-control" id="addressUp" value='<%= address %>' required>
+            </div>
+            <div class="mb-3">
+                <label for="empIdUp" class="form-label">Employee ID</label>
+                <input type="number" disabled class="form-control" id="empIdUp" value='<%= empId %>' aria-describedby="emailHelp" required>
+            </div>
+            <div class="mb-3">
+              <label for="ageUp" class="form-label">Age</label>
+              <input type="number" class="form-control" id="ageUp" value='<%= age %>' required>
+            </div>
+            <div class="mb-3">
+              <label for="placeUp" class="form-label">Birth Place</label>
+              <input type="text" class="form-control" id="placeUp" value='<%= place %>' required>
+            </div>
+            <br>
+            <button type="submit" id='updateDetails' class="btn btn-primary">Update Details</button>
+          </form>
+          <% } %>
+        <!-- <form > -->
+            <div id='createDetails'>
+                <div  class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your Name" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="address" placeholder="Enter your Address" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="empId" class="form-label">Employee Id</label>
+                    <input type="number" class="form-control" id="empId" placeholder="Enter your Employee Id" required>
+                    <div id="emailHelp" class="danger" style='color:#9b2226'>!!!Please enter correct Employee id</div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="age" class="form-label">Age</label>
+                    <input type="number" class="form-control" id="age" placeholder="Enter your Age" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="place" class="form-label"> Birth Place</label>
+                    <input type="text" class="form-control" id="place" placeholder="Enter your Birth place" required>
+                  </div>
+                  <br>
+                  <button type='submit' class="btn-success" id='setDetails'>Set details</button>
+                  <br> <br>
+                  <button  id='viewDetails' class="btn-warning">View details</button>
+            </div>
+        <!-- </form> -->
+              <br>
+              <div id='details'>
+                <br>
+                <button class='close' id='closeDetails'>X</button>
+                <table class="table tcontainer">
+                    <thead>                    
+                    <tr>                    
+                     <th scope="col">Name</th>                    
+                     <th scope="col">Email</th>                    
+                     <th scope="col">Employee Id</th>                    
+                     <th scope="col">Company</th>                    
+                     <th scope="col">Place</th>                   
+                     <th scope="col">Update</th>                    
+                     <th scope="col">Delete</th>                    
+                    </tr>                    
+                    </thead>                    
+                    <tbody>                    
+                   <% _.each(collection,function(user){ %>                    
+                    <tr>                    
+                     <td><%= user.name %></td>                    
+                     <td><%= user.address %></td>                    
+                     <td><%= user.empId %></td>                   
+                     <td><%= user.age %></td>                   
+                     <td><%= user.place %></td> 
+                     <td><button class='update'>update</button></td>                  
+                     <td><button class='delete'>delete</button></td>                  
+                    </tr>                    
+                    <% }) %>                   
+                    </tbody>
+                 </table>
+              </div>
+              <div id='sideDiv' class='col-xxl-4 col-xl-4 col-md-4 col-lg-4 col-sm-6 col-xs-6'>
+                  <br>
+                  <button class='close' id='closeSide'>X</button>
+                  <br><br>
+                  <a href="#/view1" style='font-family:"sans-serif" font-size:"30px" color:"aliceblue";'>write an email</a><br><br>
+                  <a href="#/view2">view graph</a><br><br>
+                  <a href="#/view3">view template</a><br><br>
+                  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure eum mollitia molestiae
+                      soluta consequatur accusantium laudantium quo autem cumque. 
+                      Expedita non illo corporis dolor iste, maiores eius itaque architecto vero.</p>
+                      
+                    </div>
+                </script>
+                <script type=text/template id='sideBar'>
+                    <!-- <button class="btn-info" id="openSide" style='float: left;'>|||</button>
+                    <div id='sideDiv' class='col-xxl-4 col-xl-4 col-md-4 col-lg-4 col-sm-6 col-xs-6'>
+                  <br>
+                  <button class='close' id='closeSide'>X</button>
+                  <br><br>
+                  <a href="#/view1" style='color:"aliceblue";'>write an email</a><br><br>
+                  <a href="#/view2">view graph</a><br><br>
+                  <a href="#/view3">view template</a><br><br>
+                  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure eum mollitia molestiae
+                      soluta consequatur accusantium laudantium quo autem cumque. 
+                      Expedita non illo corporis dolor iste, maiores eius itaque architecto vero.</p>
+                      
+                    </div> -->
+                </script>
+
+    <script type="text/template" id="view1">
+        <a href="#">home</a>
+        <table>
+            <tbody>
+                <tr>
+                    <th>From :</th>
+                    <td style='width: 95%'><br><div id="fromEmail" class="Am Al editable LW-avf tS-tW" 
+                        hidefocus="false" aria-label="Message Body" g_editable="true" role="textbox" 
+                        aria-multiline="true" contenteditable="true" tabindex="1" style="direction: ltr; 
+                        min-height: 20px;  background-color:#e9ecef; text-align: left;" spellcheck="false" aria-owns=":1bt" aria-controls=":1bt"><br>
+                        </div><br></td>
+                        
+                </tr>
+                <tr>
+                    <th>To :</th>
+                    <td style='width: 95%'><br><div id="toEmail" class="Am Al editable LW-avf tS-tW" 
+                        hidefocus="false" aria-label="Message Body" g_editable="true" role="textbox" 
+                        aria-multiline="true" contenteditable="true" tabindex="1" style="direction: ltr; 
+                        min-height: 20px; background-color:#e9ecef; text-align: left;" spellcheck="false" aria-owns=":1bt" aria-controls=":1bt"><br>
+                        </div><br></td>
+                </tr>
+                <tr>
+                    <th>subject:</th>
+                    <td style='width: 95%'><br><div id="subjectEmail" class="Am Al editable LW-avf tS-tW" 
+                        hidefocus="false" aria-label="Message Body" g_editable="true" role="textbox" 
+                        aria-multiline="true" contenteditable="true" tabindex="1" style="direction: ltr; 
+                        min-height: 20px; background-color:#e9ecef; text-align: left;" spellcheck="false" aria-owns=":1bt" aria-controls=":1bt"><br>
+                        </div><br></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <table>
+            <tbody style='padding: 1rem;'>
+                <tr>
+                    <div id="bodyEmail" class="Am Al editable LW-avf tS-tW" 
+                    hidefocus="false" aria-label="Message Body" g_editable="true" role="textbox" 
+                    aria-multiline="true" contenteditable="true" tabindex="1" style="direction: ltr; 
+                    min-height: 268px; background-color:#e9ecef; text-align: left;" spellcheck="false" aria-owns=":1bt" aria-controls=":1bt"><br>
+                    </div>
+                </tr>
+                <tr>
+                    <div id='tempD'></div>
+                </tr>
+                <br/>
+                <tr><button id='btnClick' type=submit>send MAIL</button></tr>
+            </tbody>
+        </table>
+        <div id='mailData'>
+            <button class='close' id='closeMail'>X</button>
+            <table class="table tcontainer">
+                <thead>                    
+                <tr>                    
+                 <th scope="col">From email</th>                    
+                 <th scope="col">To email</th>                    
+                 <th scope="col">Subject</th>                    
+                 <th scope="col">Body</th>                                        
+                </tr>                    
+                </thead>                    
+                <tbody>                    
+               <% _.each(collection,function(user){ %>                    
+                <tr>                    
+                 <td><%= user.from %></td>                    
+                 <td><%= user.to %></td>                    
+                 <td><%= user.subject %></td>                   
+                 <td><%= user.body %></td>                                                   
+                </tr>                    
+                <% }) %>                   
+                </tbody>
+             </table>
+        </div>
+    </script>
+    
+    <script type="text/template" id="eves2"> 
+        <a href="#">home</a>
+        <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+        <!-- <table>
+            <tbody>
+                <thead>
+                    <th>x values</th>
+                    <th>Y values</th>
+                </thead>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td><input type="number" name="" id=""></td>
+                    <td><input type="number" name="" id=""></td>
+                </tr>
+                <tr>
+                    <td><input type="number" name="" id=""></td>
+                    <td><input type="number" name="" id=""></td>
+                </tr>
+                <tr>
+                    <td><input type="number" name="" id=""></td>
+                    <td><input type="number" name="" id=""></td>
+                </tr>
+                <tr>
+                    <td><input type="number" name="" id=""></td>
+                    <td><input type="number" name="" id=""></td>
+                </tr>
+                <tr>
+                    <td><input type="number" name="" id=""></td>
+                    <td><input type="number" name="" id=""></td>
+                </tr>
+            </tbody>
+        </table> -->
+    </script>
+
+    <!-- <script type="text/template" id="tempView2">
+        <table>
+            <tr>hello</tr>
+            <tr>hello</tr>
+            <tr>hello</tr>
+            <tr>hello</tr>
+            <tr>hello</tr>
+            <tr>hello</tr>
+        </table>
+        <table>
+            <tr>hello</tr>
+            <tr>hello</tr>
+            <tr>hello</tr>
+            <tr>hello</tr>
+            <tr>hello</tr>
+            <tr>hello</tr>
+        </table>
+    </script> -->
+    <script type="text/template" id="tempView">
+        <br>
+        <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;" class='col-xxl-10 col-xl-10 col-md-10 col-lg-10 col-sm-4 col-xs-3'>
+            <tr>
+              <td align="center" style="padding:0;width:100px">
+                <table role="presentation" style="width:100%;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;">
+                  <tr>
+                    <td align="center" style="padding:10px 0 10px 0;background:orange;">
+                      <img src="data:image/jpeg;base64,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"
+                       alt="image is here" width="300" height="100"style="display:block;" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding:36px 30px 42px 30px;">
+                      <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
+                        <tr>
+                          <td style="padding:0 0 36px 0;color:#153643;">
+                            <h1 style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;">Independence Theme</h1>
+                            <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia consectetur nemo rem! Saepe natus obcaecati laborum aperiam at, adipisci id impedit voluptatem?</p>
+                            <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><a href="https://www.valtech.com/en-in/" style="color:#ee4c50;text-decoration:underline;">Visit : Valtech India Website</a></p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding:0;">
+                            <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
+                              <tr>
+                                <td style="width:260px;padding:0;vertical-align:top;color:#153643;"  class='col-xxl-10 col-xl-10 col-md-10 col-lg-8 col-sm-4 col-xs-3'>
+                                  <p style="margin:0 0 25px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><img src="./assests/career.png" alt="image here" width="260" style="height:auto;display:block;" /></p>
+                                  <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium cum autem inventore tempora ratione voluptate cupiditate, ea voluptatem blanditiis magni quos fuga!</p>
+                                  <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><a href="https://www.valtech.com/en-in/career/joblist/" style="color:#ee4c50;text-decoration:underline;">Valtech Career Page</a></p>
+                                </td>
+                                <td style="width:20px;padding:0;font-size:0;line-height:0;">&nbsp;</td>
+                                <td style="width:260px;padding:0;vertical-align:top;color:#153643;"  class='col-xxl-10 col-xl-10 col-md-10 col-lg-8 col-sm-4 col-xs-3'>
+                                  <p style="margin:0 0 25px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><img src="./assests/podcasts.png" alt="image here" width="260" style="height:auto;display:block;" /></p>
+                                  <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi deserunt ab quo omnis provident molestias voluptatibus modi, eligendi aliquid molestiae. Minima, laboriosam.</p>
+                                  <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><a href="https://www.valtech.com/en-in/podcasts/" style="color:#ee4c50;text-decoration:underline;">Valtech Podcasts</a></p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding:30px;background:green;">
+                      <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;">
+                        <tr>
+                          <td style="padding:0;width:50%;" align="left">
+                            <p style="margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#ffffff;">
+                              &reg;<a href="http://www.example.com" style="color:#ffffff;text-decoration:underline;">Moulidhar B</a>
+                            </p>
+                          </td>
+                          <td style="padding:0;width:50%;" align="right">
+                            <table role="presentation" style="border-collapse:collapse;border:0;border-spacing:0;">
+                              <tr>
+                                <td style="padding:0 0 0 10px;width:38px;">
+                                  <a href="http://www.instagram.com/" style="color:#ffffff;"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/768px-Instagram_logo_2016.svg.png" 
+                                    alt="Instagram" width="38" style="height:auto;display:block;border:0;" /></a>
+                                </td>
+                                <td style="padding:0 0 0 10px;width:38px;">
+                                  <a href="http://www.twitter.com/" style="color:#ffffff;"><img src="data:image/png;base64,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" 
+                                    alt="Twitter" width="38" style="height:auto;display:block;border:0;" /></a>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+    </script>
+    <script src="./js/assignment3/assign3.js"></script>
+</body>
+</html>

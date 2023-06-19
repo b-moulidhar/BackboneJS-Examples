@@ -1,0 +1,58 @@
+#content{
+    position: relative;
+}
+#sideDiv{
+    position: absolute;
+    background-color: grey;
+    color: aliceblue;
+    top:2%;
+    height: 465px;
+}
+/* #sideDivBar{
+    position: absolute;
+    background-color: grey;
+    color: aliceblue;
+    top:2%;
+    height: 465px;
+} */
+.container{
+    border: 1px solid rgb(143, 141, 141);
+    margin: 70px auto;
+    /* width: 100px; */
+    gap: 0.5rem;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    /* background-color:rgb(28, 178, 219); */
+    /* background: rgb(91,128,143); */
+    /* background: linear-gradient(90deg, rgba(91,128,143,1) 3%, rgba(0,212,255,1) 27%, rgba(0,212,255,1) 71%, rgba(91,128,143,1) 97%);    display: flex; */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    -webkit-box-shadow: 1px 3px 25px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 3px 25px 0px rgba(0,0,0,0.75);
+    box-shadow: 1px 3px 25px 0px rgba(0,0,0,0.75);
+    overflow: hidden;
+    position: relative;
+}
+a{
+    color: darkorange;
+}
+
+/* #tempView{
+    width: 100%;
+    text-align: center;
+} */
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .sideDiv {
+      height: 465px;
+    }
+  }
+  
+  @media screen and (max-width: 450px) {
+    .sideDiv {
+      height: 300px;
+    }
+  }
+  

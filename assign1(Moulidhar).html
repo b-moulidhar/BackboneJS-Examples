@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/assignment.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script> 
+    <script
+      src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
+
+      <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.1/backbone.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <title>Assignment</title>
+</head>
+<body>
+    <div class="container" class="row"></div>
+    <script type="text/template" id="myView">
+        <div id="splitTwo" class="col-lg-10 col-xs-10 col-md-8">
+            <div>
+
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your Name">
+                  </div>
+                  <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="address" placeholder="Enter your Address">
+                  </div>
+            </div>
+            <div>
+                <div class="mb-3">
+                  <label for="empId" class="form-label">Employee Id</label>
+                  <input type="number" class="form-control" id="empId" placeholder="Enter your Employee Id">
+                </div>
+                <div class="mb-3">
+                  <label for="age" class="form-label">Age</label>
+                  <input type="number" class="form-control" id="age" placeholder="Enter your Age">
+                </div>
+            </div>
+        </div>
+              <br>
+              <button  id='setDetails' class="col-lg-4 col-xs-4 col-md-6" >Set details</button>
+              <button  id='viewDetails' class="col-lg-4 col-xs-4 col-md-6">View details</button>
+
+              <br>
+              <div id='details'>
+                <br>
+                <button class='close'>X</button>
+                <ul>
+                    <h3 id="nameInp">Hello <%= name %> , </h3>
+                    <h4 id="Addr">You are from <%= address %>,</h4>
+                    <h4 id="Emp">Your emp id is <%= empId %></h4>
+                    <h4 id="Age">Your age is <%= age %></h4>
+                </ul>
+              </div>
+    </script>
+    
+    <script>
+        $(document).ready(function(){
+            
+            var MyModel = Backbone.Model.extend({
+                defaults: {
+                    name: '',
+                    address:'',
+                    empId:0,
+                    age:0
+                },
+                validate:function(attribute){
+                    // if(attribute.age<10 || !attribute.age){
+                    //     return 'please enter proper age'
+                    // }
+                    if(!attribute.name){
+                        return 'Please Enter your Name!';
+                    }
+                    else if(!attribute.address){
+                        return 'Please Enter your Address!';
+                    }
+                    else if(attribute.empId<1){
+                        return 'Please Enter your Employee ID!';
+                    }
+                    else if(attribute.age<1){
+                        return 'Please Enter your Age!';
+                    }
+                    
+                }
+            });
+           
+            var MyView = Backbone.View.extend({
+                el: '.container',
+                template:_.template($('#myView').html()),
+                initialize: function () {
+                    this.render();
+                   
+                        $('#details').hide();
+                    
+                },
+                events: {
+                    'change #name': 'updateName',
+                    'change #address': 'updateAddress',
+                    'change #empId': 'updateEmp',
+                    'change #age': 'updateAge',
+                    'click #setDetails':'setVal',
+                    'click .close':'closePop',
+                    'click #viewDetails':'viewDetails'
+                },
+                render: function () {
+                    this.$el.html(this.template(this.model.toJSON()));
+                },
+                updateName: function () {
+                    var newName = $('#name').val();
+                    this.model.set('name', newName);
+                },
+                updateAddress: function () {
+                    var newName = $('#address').val();
+                    this.model.set('address', newName);
+                },
+                updateEmp: function () {
+                    var newName = $('#empId').val();
+                    this.model.set('empId', newName);
+                },
+                updateAge: function () {
+                    var newName = $('#age').val();
+                    this.model.set('age', newName);  
+                 },
+
+                setVal:function(e){
+                    e.preventDefault();
+                    // console.log(this.model.toJSON());
+                    // $('#nameInp').append(this.model.get('name'));
+                    // $('#Addr').append(this.model.get('address'));
+                    // $('#Emp').append(this.model.get('empId'));
+                    // $('#Age').append(this.model.get('age'));
+                    var templateData = _.extend({}, this.model.toJSON(), { name: this.model.get('name'),address:this.model.get('address'),  empId:this.model.get('empId'),age:this.model.get('age') });
+                    this.$el.html(this.template(templateData)); 
+                    $('#details').hide();
+                    if(this.model.isValid()){
+                        Swal.fire(
+                            'Good job!',
+                            'You entered details successfully!!',
+                            'success'
+                        )
+                    $('#details').hide();
+                    }else{
+                        Swal.fire(
+                            this.model.validationError
+                        )
+                    }
+
+                },
+                closePop:function(){
+                    
+                        $('#details').hide(500);
+                    
+                },
+                viewDetails:function(){
+                    let data = this.model.toJSON();
+                    if(this.model.isValid()){
+                        $('#details').show(500);
+                    }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Please enter proper details!'
+                        })
+                    }
+                }
+            });
+
+            var myModel = new MyModel();
+            var myView = new MyView({ 
+                model:myModel   
+        });
+
+
+        })
+    </script>
+
+
+
+
+    <!-- <script type="text/template" id="myView">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Name">
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" placeholder="Address">
+        </div>
+        <div class="mb-3">
+            <label for="empId" class="form-label">Employee Id</label>
+            <input type="number" class="form-control" id="empId" placeholder="Employee Id">
+        </div>
+        <div class="mb-3">
+            <label for="age" class="form-label">Age</label>
+            <input type="number" class="form-control" id="age" placeholder="Age">
+        </div>
+        <br>
+        <button id='setDetails'>set details</button>
+        <button id='viewDetails'>view details</button>
+
+        <br>
+        <div id='details'>
+            <button class='close'>X</button>
+            <ul>
+                <p id="nameInp">Hello {{name}},</p>
+                <p id="Addr">your address is {{address}}</p>
+                <p id="Emp">your emmployee Id is {{empId}}</p>
+                <p id="Age">your age is {{age}}</p>
+            </ul>
+            <button>Yes</button>&nbsp; <button>No</button>
+        </div>
+    </script>
+    
+    <script>
+        $(document).ready(function(){
+    
+            var MyModel = Backbone.Model.extend({
+                defaults: {
+                    name: '',
+                    address:'',
+                    empId:Number,
+                    age:Number
+                }
+            });
+    
+            var setDetails = false;
+    
+            var MyView = Backbone.View.extend({
+                el: '.container',
+                template:Handlebars.compile($('#myView').html()),
+                initialize: function () {
+                    this.render();
+                    if(!setDetails){
+                        $('#details').hide();
+                    }
+                },
+                events: {
+                    'change #name': 'updateName',
+                    'change #address': 'updateAddress',
+                    'change #empId': 'updateEmp',
+                    'change #age': 'updateAge',
+                    'click #setDetails':'setVal',
+                    'click .close':'closePop',
+                    'click #viewDetails':'viewDetails'
+                },
+                render: function () {
+                    this.$el.html(this.template(this.model.toJSON()));
+                },
+                updateName: function () {
+                    var newName = $('#name').val();
+                    this.model.set('name', newName);
+                },
+                updateAddress: function () {
+                    var newName = $('#address').val();
+                    this.model.set('address', newName);
+                },
+                updateEmp: function () {
+                    var newName = $('#empId').val();
+                    this.model.set('empId', newName);
+                },
+                updateAge: function () {
+                    var newName = $('#age').val();
+                    this.model.set('age', newName);  
+                 },
+                setVal:function(){
+                    setDetails=true
+                    console.log(this.model.toJSON());
+                    this.$el.html(this.template(this.model.toJSON()));
+                    if(setDetails){
+                        $('#details').show(500);
+                    }
+                },
+                closePop:function(){
+                        $('#details').hide(500);
+                },
+                viewDetails:function(){
+                    let data = this.model.toJSON();
+                    if(data.name!='' || data.address!='' ){
+                        $('#details').show(500);
+                    }else{
+                        alert("please set some values to view");
+                    }
+                }
+            });
+    
+            var myModel = new MyModel();
+            var myView = new MyView({ model: myModel });
+        })
+    </script> -->
+    
+
+
+
+</body>
+</html>
